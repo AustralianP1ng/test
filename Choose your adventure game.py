@@ -1,6 +1,8 @@
 # Choose your adventure game
 import time
 
+endingsUnlocked= set()      # Create empty set (unchangeable values) that will store the player's unlocked endings
+
 def intro():    # INTRODUCTION
     name = input('''Enter your adventurer's name: 
 ''')
@@ -44,6 +46,10 @@ def checkChoice1(choice1):  # Prints the appropriate path for the user's input
 
 
 def ironGateChoice2():  # LEAVE ENDING (iron gate)
+
+    global endingsUnlocked
+    endingsUnlocked.add('1. Better Safe Than Sorry')
+
     print('''
 You can't shake the feeling that the manor itself is alive, watching you.
 Perhaps leaving immediately was the wisest choice...
@@ -200,9 +206,9 @@ casting long shadows across the walls.
     
     time.sleep(5)
 
-    print('''
-Shelves of dusty tomes line the walls, 
-interrupted by a grand, mahogany desk in the center.''')
+    print('''Shelves of dusty tomes line the walls, 
+interrupted by a grand, mahogany desk in the center.
+''')
 
     time.sleep(5)
 
@@ -212,14 +218,17 @@ interrupted by a grand, mahogany desk in the center.''')
 
 
 def leatherJournal():
+
+    global endingsUnlocked
+    endingsUnlocked.add('3. The Darkness Takes You')
+
     print('''
 You flip open the journal, revealing frantic handwriting sprawled across its pages.
 ''')
     
     time.sleep(5)
 
-    print('''
-The entries speak of an ancient curse tied to the manor, 
+    print('''The entries speak of an ancient curse tied to the manor, 
 one that feeds on the souls of those who linger too long.
 ''')
     
@@ -251,14 +260,17 @@ You hear the sound of something heavy breathing right behind you.
 
 
 def theKey():
+
+    global endingsUnlocked
+    endingsUnlocked.add("2. Escape with the Key to the Manor's Secrets")
+
     print('''You snatch the ornate key from the desk, 
 its cold metal sending a chill through your fingers. 
 ''')
     
     time.sleep(5)
 
-    print('''
-The fire flares brightly for a brief moment, 
+    print('''The fire flares brightly for a brief moment, 
 revealing a hidden door behind one of the bookshelves. 
 The key fits perfectly into the lock.
 ''')
@@ -331,6 +343,10 @@ and a raspy, guttural voice whispers,
 
 
 def openChest():
+
+    global endingsUnlocked
+    endingsUnlocked.add('5. The Manor Claims Another Soul')
+
     print('''Ignoring the warning signs, you unlock the chest. 
 ''')
 
@@ -351,6 +367,10 @@ The whispers turn into mocking laughter as your vision fades to black.'''
 
 
 def flee():
+
+    global endingsUnlocked
+    endingsUnlocked.add('4. You Escape Ravenwood Manor... For now.')
+
     print('''You slam the door shut and run back down the hallway, your breath coming in ragged gasps.
 ''')
 
@@ -395,6 +415,12 @@ def checkChoice5(choice5):
 
 
 def playAgain():
+
+
+    totalEndings = 5    # Total number of unique endings
+    print(f'''
+You have unlocked {len(endingsUnlocked)} out of {totalEndings} endings.''')
+
     print('''
 Do you want to play again?''')
 
@@ -418,8 +444,11 @@ Do you want to play again?''')
         quit()
 
 
+
+
 # Game Execution Starts
 def playGame():
+
     intro()
     userInput1 = ironGate()
     checkChoice1(userInput1)
@@ -442,5 +471,6 @@ def playGame():
 
     userInput5 = scratchingDoorChoice()
     checkChoice5(userInput5)
+
 
 playGame()
