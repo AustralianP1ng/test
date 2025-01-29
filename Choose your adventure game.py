@@ -461,7 +461,7 @@ def playGame():
         checkChoice2a(userInput2a)  # Resume flow after staircase
 
     elif userInput2 == 2:  # Hallway
-        hallway()
+        pass    # redundant hallway() call since checkChoice2 calls hallway() 
 
     userInput3 = hallwayChoice()
     checkChoice3(userInput3)
