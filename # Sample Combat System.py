@@ -17,7 +17,7 @@ class Character():
         self.defending = False
 
     def normal_attack(self,
-                      target: str):
+                      target: str):        
         normal_damage = self.attack_power
         target.take_damage(normal_damage)
         print(f'{self.name} attacks {target.name} for {self.attack_power} points of DAMAGE!')
@@ -48,14 +48,27 @@ class Character():
     
 
     def flee(self):
-        print(f'{self.name} FLEED.')
+        print(f'{self.name} FLED.')
         exit()
+
+
+    def heavy_attack(self,
+                     target: str):
+        pass
+         
+
+
 
 def gameStart():
 
+    weapons = ['Fist', 'Dagger']
+
+    player_name = input('''Choose your adventurer's name"
+>''')
     
-    player = Character("HERO", 100, 10, False)
+    player = Character(player_name, 100, 10, False)
     enemy = Character('DUMMY', 50, 5, False)
+
 
     while player.is_alive() and enemy.is_alive():
 
@@ -63,7 +76,8 @@ def gameStart():
         playerChoice = input("> ")
 
         while playerChoice != '1' and playerChoice != '2' and playerChoice != '3':
-            print('Invalid choice. Please enter "1", "2" or "3"')
+            playerChoice = input('''Invalid choice. Please enter "1", "2" or "3"
+> ''')
 
         else:
             player.reset_defense()
@@ -82,7 +96,7 @@ def gameStart():
             enemy_turn = random.randint(1, 2)
 
             if enemy_turn == 1:
-                enemy.attack_power(player)
+                enemy.normal_attack(player)
             else:
                 enemy.defend()
     
