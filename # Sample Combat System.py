@@ -1,6 +1,7 @@
 # Sample Combat System Text Vers
 
 import random
+import time
 
 
 
@@ -20,12 +21,20 @@ class Character():
                       target: str):        
         normal_damage = self.attack_power
         target.take_damage(normal_damage)
+
         print(f'{self.name} attacks {target.name} for {self.attack_power} points of DAMAGE!')
+        print()
+        time.sleep(1)
 
 
     def defend(self):
         self.defending = True
+
         print(f"{self.name} DEFENDS.")
+        print()
+        time.sleep(1)
+
+
 
 
     def reset_defense(self):        # resets 'DEFENDING' back to false after one turn
@@ -49,6 +58,7 @@ class Character():
 
     def flee(self):
         print(f'{self.name} FLED.')
+        print()
         exit()
 
 
@@ -61,21 +71,34 @@ class Character():
 
 def gameStart():
 
-    weapons = ['Fist', 'Dagger']
+    # Getting player to input a desired name
+    player_name = input('''Choose your adventurer's name
+> ''')
+    print()
 
-    player_name = input('''Choose your adventurer's name"
->''')
-    
+    # Prevents empty spaces or blank inputs as name
+    while '' in player_name:
+        print()
+        print('Name should not include spaces or blanks')
+        time.sleep(2)
+        player_name = input('''Choose your adventurer's name
+> ''')
+
+    # Initialise player and enemy objects
     player = Character(player_name, 100, 10, False)
-    enemy = Character('DUMMY', 50, 5, False)
+
+    enemy_types = [Character('DUMMY', 100, 0, False), Character("SKELETON", 25, 5, False),Character('GOBLIN', 50, 7, False), Character("GOLEM", 100, 4, True)]
+    enemy = random.choice(enemy_types)
 
 
+    # Actual start of the game
     while player.is_alive() and enemy.is_alive():
 
         print("""[1| ATTACK]  [2| DEFEND]  [3| FLEE]""")
         playerChoice = input("> ")
 
         while playerChoice != '1' and playerChoice != '2' and playerChoice != '3':
+            print()
             playerChoice = input('''Invalid choice. Please enter "1", "2" or "3"
 > ''')
 
