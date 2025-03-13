@@ -35,8 +35,6 @@ class Character():
         time.sleep(1)
 
 
-
-
     def reset_defense(self):        # resets 'DEFENDING' back to false after one turn
         self.defending = False
 
@@ -77,7 +75,7 @@ def gameStart():
     print()
 
     # Prevents empty spaces or blank inputs as name
-    while '' in player_name:
+    while ' ' in player_name or '' == player_name:
         print()
         print('Name should not include spaces or blanks')
         time.sleep(2)
