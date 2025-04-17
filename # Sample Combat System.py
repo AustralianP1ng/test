@@ -17,12 +17,14 @@ class Character():
         self.attack_power = attack_power
         self.defending = False
 
+
     def normal_attack(self,
                       target: str):        
         normal_damage = self.attack_power
+        print(f'{self.name} attacks {target.name} for {self.attack_power} points of DAMAGE!')
+
         target.take_damage(normal_damage)
 
-        print(f'{self.name} attacks {target.name} for {self.attack_power} points of DAMAGE!')
         print()
         time.sleep(1)
 
@@ -61,9 +63,24 @@ class Character():
 
 
     def heavy_attack(self,
-                     target: str):
-        pass
+                     target: str,):
+        
+        damage_multipler = [1.50, 1.75, 2.0]
+        heavy_damage = self.attack_power * int(random.choice(damage_multipler))
+
+        target.take_damage(heavy_damage)
+
+        print(f'{self.name} HEAVY ATTACKS {target.name} for {self.heavy_attack} points of DAMAGE!')
          
+
+
+class weapons():
+    def __init__(self, 
+                 weapon_name: str,
+                 weapon_attack: int,
+                 ):
+        pass
+        
 
 
 
@@ -85,12 +102,17 @@ def gameStart():
     # Initialise player and enemy objects
     player = Character(player_name, 100, 10, False)
 
-    enemy_types = [Character('DUMMY', 100, 0, False), Character("SKELETON", 25, 5, False),Character('GOBLIN', 50, 7, False), Character("GOLEM", 100, 4, True)]
+    # Different enemies
+    enemy_types = [Character('DUMMY', 100, 1, False), Character("SKELETON", 25, 5, False),Character('GOBLIN', 50, 7, False), Character("GOLEM", 100, 4, True)]
     enemy = random.choice(enemy_types)
 
 
     # Actual start of the game
     while player.is_alive() and enemy.is_alive():
+
+        print(f"""Player HP: {player.hp}
+Enemy HP: {enemy.hp}
+""")
 
         print("""[1| ATTACK]  [2| DEFEND]  [3| FLEE]""")
         playerChoice = input("> ")
@@ -114,18 +136,20 @@ def gameStart():
                 player.flee()
         
         if enemy.is_alive():
-            enemy_turn = random.randint(1, 2)
+            enemy_choice = random.randint(1, 2)
 
-            if enemy_turn == 1:
+            if enemy_choice == 1:
                 enemy.normal_attack(player)
             else:
                 enemy.defend()
     
     if player.is_alive():
-        print(f"{player.name} defeated {enemy.name}!")
+        print(f"""{player.name} defeated {enemy.name}!
+""")
         print("You WIN.")
     else:
-        print(f"{enemy.name} defeated {player.name}!")
+        print(f"""{enemy.name} defeated {player.name}!
+""")
         print("You LOSE.")
 
 gameStart()
