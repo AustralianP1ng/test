@@ -15,7 +15,7 @@ class Character():
         self.name = name
         self.hp = hp
         self.attack_power = attack_power
-        self.defending = False
+        self.defending = defending
 
 
     def normal_attack(self,
@@ -123,8 +123,6 @@ Enemy HP: {enemy.hp}
 > ''')
 
         else:
-            player.reset_defense()
-            enemy.reset_defense()
             
             if playerChoice == '1':
                 player.normal_attack(enemy)
@@ -134,6 +132,9 @@ Enemy HP: {enemy.hp}
             
             else:
                 player.flee()
+
+        player.reset_defense()
+        enemy.reset_defense()
         
         if enemy.is_alive():
             enemy_choice = random.randint(1, 2)
@@ -142,6 +143,7 @@ Enemy HP: {enemy.hp}
                 enemy.normal_attack(player)
             else:
                 enemy.defend()
+                
     
     if player.is_alive():
         print(f"""{player.name} defeated {enemy.name}!
