@@ -26,7 +26,7 @@ class Character():
         target.take_damage(normal_damage)
 
         print()
-        time.sleep(1)
+        time.sleep(2)
 
 
     def defend(self):
@@ -34,7 +34,7 @@ class Character():
 
         print(f"{self.name} DEFENDS.")
         print()
-        time.sleep(1)
+        time.sleep(2)
 
 
     def reset_defense(self):        # resets 'DEFENDING' back to false after one turn
@@ -68,10 +68,12 @@ class Character():
         damage_multipler = [1.50, 1.75, 2.0]
         heavy_damage = self.attack_power * int(random.choice(damage_multipler))
 
-        target.take_damage(heavy_damage)
-
         print(f'{self.name} HEAVY ATTACKS {target.name} for {self.heavy_attack} points of DAMAGE!')
          
+        target.take_damage(heavy_damage)
+        print()
+
+        time.sleep(2)
 
 
 class weapons():
@@ -114,12 +116,12 @@ def gameStart():
 Enemy HP: {enemy.hp}
 """)
 
-        print("""[1| ATTACK]  [2| DEFEND]  [3| FLEE]""")
+        print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
         playerChoice = input("> ")
 
         while playerChoice != '1' and playerChoice != '2' and playerChoice != '3':
             print()
-            playerChoice = input('''Invalid choice. Please enter "1", "2" or "3"
+            playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
 > ''')
 
         else:
@@ -129,6 +131,9 @@ Enemy HP: {enemy.hp}
             
             elif playerChoice == '2':
                 player.defend()
+            
+            elif playerChoice == '3':
+                player.heavy_attack(enemy)
             
             else:
                 player.flee()
