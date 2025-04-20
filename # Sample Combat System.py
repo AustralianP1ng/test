@@ -21,7 +21,7 @@ class Character():
     def normal_attack(self,
                       target: str):        
         normal_damage = self.attack_power
-        print(f'{self.name} attacks {target.name} for {self.attack_power} points of DAMAGE!')
+        print(f'{self.name} attacks {target.name} for {normal_damage} points of DAMAGE!')
 
         target.take_damage(normal_damage)
 
@@ -63,12 +63,12 @@ class Character():
 
 
     def heavy_attack(self,
-                     target: str,):
+                     target: str):
         
         damage_multipler = [1.50, 1.75, 2.0]
-        heavy_damage = self.attack_power * int(random.choice(damage_multipler))
+        heavy_damage = int(self.attack_power *  random.choice(damage_multipler))
 
-        print(f'{self.name} HEAVY ATTACKS {target.name} for {self.heavy_attack} points of DAMAGE!')
+        print(f'{self.name} HEAVY ATTACKS {target.name} for {heavy_damage} points of DAMAGE!')
          
         target.take_damage(heavy_damage)
         print()
@@ -119,7 +119,7 @@ Enemy HP: {enemy.hp}
         print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
         playerChoice = input("> ")
 
-        while playerChoice != '1' and playerChoice != '2' and playerChoice != '3':
+        while playerChoice not in ['1', '2', '3', '4']:
             print()
             playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
 > ''')
