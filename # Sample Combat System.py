@@ -17,6 +17,8 @@ class Character():
         self.attack_power = attack_power
         self.defending = defending
 
+        self.charging = False
+
 
     def normal_attack(self,
                       target: str):        
@@ -62,13 +64,23 @@ class Character():
         exit()
 
 
+    def heavy_attack_charge(self):
+        self.charging = True
+
+        print(f'{self.name} is CHARGING their HEAVY ATTACK')
+        print()
+
+        time.sleep(2)
+
     def heavy_attack(self,
                      target: str):
         
-        damage_multipler = [1.50, 1.75, 2.0]
-        heavy_damage = int(self.attack_power *  random.choice(damage_multipler))
+        damage_multiplier_list = [1.50, 1.75, 2.0]
+        damage_multiplier = random.choice(damage_multiplier_list)
 
-        print(f'{self.name} HEAVY ATTACKS {target.name} for {heavy_damage} points of DAMAGE!')
+        heavy_damage = int(self.attack_power * damage_multiplier)
+
+        print(f'{self.name} HEAVY ATTACKS {target.name} for {heavy_damage} points of DAMAGE! ({damage_multiplier}x dmg mult)')
          
         target.take_damage(heavy_damage)
         print()
@@ -114,40 +126,46 @@ def gameStart():
 
         print(f"""Player HP: {player.hp}
 Enemy HP: {enemy.hp}
-""")
-
-        print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
-        playerChoice = input("> ")
-
-        while playerChoice not in ['1', '2', '3', '4']:
-            print()
-            playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
-> ''')
+""")    
+        
+        if player.charging == True:
+            player.heavy_attack(enemy)
+            player.charging = False
 
         else:
-            
-            if playerChoice == '1':
-                player.normal_attack(enemy)
-            
-            elif playerChoice == '2':
-                player.defend()
-            
-            elif playerChoice == '3':
-                player.heavy_attack(enemy)
-            
-            else:
-                player.flee()
 
-        player.reset_defense()
-        enemy.reset_defense()
+            print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
+            playerChoice = input("> ")
+
+            while playerChoice not in ['1', '2', '3', '4']:
+                print()
+                playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
+> ''')
+
+            else:
+            
+                if playerChoice == '1':
+                    player.normal_attack(enemy)
+            
+                elif playerChoice == '2':
+                    player.defend()
+            
+                elif playerChoice == '3':
+                    player.heavy_attack_charge()
+            
+                else:
+                    player.flee()
+
+            player.reset_defense()
+            enemy.reset_defense()
         
-        if enemy.is_alive():
-            enemy_choice = random.randint(1, 2)
+            if enemy.is_alive():
+                enemy_choice = random.randint(1, 2)
 
-            if enemy_choice == 1:
-                enemy.normal_attack(player)
-            else:
-                enemy.defend()
+                if enemy_choice == 1:
+                    enemy.normal_attack(player)
+                else:
+                    enemy.defend()
                 
     
     if player.is_alive():
