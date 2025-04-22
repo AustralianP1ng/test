@@ -4,6 +4,8 @@ import random
 import time
 
 
+achievements = set()        # Achievement for each mob defeated
+
 
 class Character():
 
@@ -96,22 +98,43 @@ class weapons():
         pass
         
 
+def showAchievements():
+
+    total_achievements = 4
+
+    print(f"""
+You have defeated {len(achievements)} out of {total_achievements} enemies.
+""")
+    time.sleep(2)
+
+def playAgain():
+
+    play_again_choice = input("""Play again
+[1| View defeated enemies]
+[2| Yes]
+[3| No ]
+> """)
+    
+    while play_again_choice not in ['1', '2', '3']:
+        print("""Invalid choice. Please enter 1, 2 or 3.
+""")
+        play_again_choice = input("> ")
+    
+    if play_again_choice == '1':
+        for enemies_defeated in achievements:
+            print(enemies_defeated)
+        
+
+    elif play_again_choice == '2':
+        gameStart()
+    
+    else:
+        quit()
+
 
 
 def gameStart():
 
-    # Getting player to input a desired name
-    player_name = input('''Choose your adventurer's name
-> ''')
-    print()
-
-    # Prevents empty spaces or blank inputs as name
-    while ' ' in player_name or '' == player_name:
-        print()
-        print('Name should not include spaces or blanks')
-        time.sleep(2)
-        player_name = input('''Choose your adventurer's name
-> ''')
 
     # Initialise player and enemy objects
     player = Character(player_name, 100, 10, False)
@@ -172,9 +195,31 @@ Enemy HP: {enemy.hp}
         print(f"""{player.name} defeated {enemy.name}!
 """)
         print("You WIN.")
+        achievements.add(f'{enemy.name} defeated')
+
+        showAchievements()
+        playAgain()
+
     else:
         print(f"""{enemy.name} defeated {player.name}!
 """)
         print("You LOSE.")
+
+        showAchievements()
+        playAgain()
+
+
+ # Getting player to input a desired name
+player_name = input('''Choose your adventurer's name
+> ''')
+print()
+
+# Prevents empty spaces or blank inputs as name
+while ' ' in player_name or '' == player_name:
+    print()
+    print('Name should not include spaces or blanks')
+    time.sleep(2)
+    player_name = input('''Choose your adventurer's name
+> ''')
 
 gameStart()
