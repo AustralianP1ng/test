@@ -107,6 +107,12 @@ You have defeated {len(achievements)} out of {total_achievements} enemies.
 """)
     time.sleep(2)
 
+
+def enemyAI():
+    pass
+
+
+
 def playAgain():
 
     play_again_choice = input("""Play again:
@@ -138,7 +144,6 @@ def playAgain():
         quit()
 
 
-
 def gameStart():
 
 
@@ -146,7 +151,7 @@ def gameStart():
     player = Character(player_name, 100, 10, False)
 
     # Different enemies
-    enemy_types = [Character('DUMMY', 100, 1, False), Character("SKELETON", 25, 5, False),Character('GOBLIN', 50, 7, False), Character("GOLEM", 100, 4, True)]
+    enemy_types = [Character('DUMMY', 100, 5, False), Character("SKELETON", 25, 15, False),Character('GOBLIN', 50, 12, False), Character("GOLEM", 100, 10, True)]
 
     enemy_choice = input("""Choose an opponent:
 [1| DUMMY]  [2| SKELETON]  [3| GOBLIN]  [4| GOLEM]
@@ -207,15 +212,20 @@ Enemy HP: {enemy.hp}
                     player.flee()
 
             player.reset_defense()
-            enemy.reset_defense()
+
+            if enemy == enemy_types[0] or enemy == enemy_types[1] or enemy == enemy_types[2]:
+                enemy.reset_defense()
         
             if enemy.is_alive():
-                enemy_choice = random.randint(1, 2)
-
-                if enemy_choice == 1:
+                if enemy == enemy_types[3]:
                     enemy.normal_attack(player)
                 else:
-                    enemy.defend()
+                    ai_choice = random.randint(1, 2)
+
+                    if ai_choice == 1:
+                        enemy.normal_attack(player)
+                    else:
+                        enemy.defend()
                 
     
     if player.is_alive():
@@ -248,5 +258,6 @@ while ' ' in player_name or '' == player_name:
     time.sleep(2)
     player_name = input('''Choose your adventurer's name
 > ''')
+
 
 gameStart()
