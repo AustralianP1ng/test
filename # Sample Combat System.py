@@ -109,7 +109,7 @@ You have defeated {len(achievements)} out of {total_achievements} enemies.
 
 def playAgain():
 
-    play_again_choice = input("""Play again
+    play_again_choice = input("""Play again:
 [1| View defeated enemies]
 [2| Yes]
 [3| No ]
@@ -122,10 +122,16 @@ def playAgain():
     
     if play_again_choice == '1':
         for enemies_defeated in achievements:
+            print()
             print(enemies_defeated)
+            print()
+            time.sleep(2)
+        
+        playAgain()
         
 
     elif play_again_choice == '2':
+        print()
         gameStart()
     
     else:
@@ -141,7 +147,28 @@ def gameStart():
 
     # Different enemies
     enemy_types = [Character('DUMMY', 100, 1, False), Character("SKELETON", 25, 5, False),Character('GOBLIN', 50, 7, False), Character("GOLEM", 100, 4, True)]
-    enemy = random.choice(enemy_types)
+
+    enemy_choice = input("""Choose an opponent:
+[1| DUMMY]  [2| SKELETON]  [3| GOBLIN]  [4| GOLEM]
+> """)
+    
+    while enemy_choice not in ['1', '2', '3', '4']:
+        print()
+        enemy_choice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
+> ''')
+    
+
+    if enemy_choice == '1':
+        enemy = enemy_types[0]
+
+    elif enemy_choice == '2':
+        enemy = enemy_types[1]
+
+    elif enemy_choice == '3':
+        enemy = enemy_types[2]
+    
+    elif enemy_choice == '4':
+        enemy = enemy_types[3]
 
 
     # Actual start of the game
