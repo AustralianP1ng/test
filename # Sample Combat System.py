@@ -69,10 +69,11 @@ class Character():
     def heavy_attack_charge(self):
         self.charging = True
 
-        print(f'{self.name} is CHARGING their HEAVY ATTACK')
-        print()
-
+        print(f"""{self.name} is CHARGING their HEAVY ATTACK
+{self.name} will not be able to use HEAVY ATTACK on their next turn!
+""")        
         time.sleep(2)
+
 
     def heavy_attack(self,
                      target: str):
@@ -146,6 +147,7 @@ def playAgain():
 
 def gameStart():
 
+    heavy_attack_counter = 0
 
     # Initialise player and enemy objects
     player = Character(player_name, 100, 10, False)
@@ -189,27 +191,52 @@ Enemy HP: {enemy.hp}
 
         else:
 
-            print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
-            playerChoice = input("> ")
+            if heavy_attack_counter == 0:   # Allows heavy attack if heavy attack wasn't used last turn
+                print("""[1| ATTACK]  [2| DEFEND]  [3| HEAVY]  [4| FLEE]""")
+                playerChoice = input("> ")
 
-            while playerChoice not in ['1', '2', '3', '4']:
-                print()
-                playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
+                while playerChoice not in ['1', '2', '3', '4']:
+                    print()
+                    playerChoice = input('''Invalid choice. Please enter "1", "2", "3" or "4"
 > ''')
 
-            else:
-            
-                if playerChoice == '1':
-                    player.normal_attack(enemy)
-            
-                elif playerChoice == '2':
-                    player.defend()
-            
-                elif playerChoice == '3':
-                    player.heavy_attack_charge()
-            
                 else:
-                    player.flee()
+            
+                    if playerChoice == '1':
+                        player.normal_attack(enemy)
+            
+                    elif playerChoice == '2':
+                        player.defend()
+            
+                    elif playerChoice == '3':
+
+                        heavy_attack_counter += 1
+                        player.heavy_attack_charge()
+            
+                    else:
+                        player.flee()
+
+            else:
+                heavy_attack_counter -= 1   # Doesn't give heavy attack option if used last turn (prevents spam)
+
+                print("""[1| ATTACK]  [2| DEFEND]  [3| FLEE]""")
+                playerChoice = input("> ")
+
+                while playerChoice not in ['1', '2', '3']:
+                    print()
+                    playerChoice = input('''Invalid choice. Please enter "1", "2" or "3"
+> ''')
+                else:
+            
+                    if playerChoice == '1':
+                        player.normal_attack(enemy)
+            
+                    elif playerChoice == '2':
+                        player.defend()
+            
+                    else:
+                        player.flee()
+                            
 
             player.reset_defense()
 
