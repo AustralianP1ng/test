@@ -272,19 +272,19 @@ Enemy HP: {enemy.hp}
         showAchievements()
         playAgain()
 
-
- # Getting player to input a desired name
-player_name = input('''Choose your adventurer's name
-> ''')
-print()
-
-# Prevents empty spaces or blank inputs as name
-while ' ' in player_name or '' == player_name:
-    print()
-    print('Name should not include spaces or blanks')
-    time.sleep(2)
+def introduction():
+    # Getting player to input a desired name
     player_name = input('''Choose your adventurer's name
 > ''')
+    print()
 
+    # Prevents empty spaces or blank inputs as name
+    while ' ' in player_name or '' == player_name:
+        print()
+        print('Name should not include spaces or blanks')
+        time.sleep(2)
+        player_name = input('''Choose your adventurer's name
+> ''')
 
+introduction()
 gameStart()
