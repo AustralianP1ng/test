@@ -2,6 +2,7 @@
 
 import random
 import time
+from tkinter import *
 
 
 achievements = set()        # Achievement for each mob defeated
@@ -113,7 +114,6 @@ def enemyAI():
     pass
 
 
-
 def playAgain():
 
     play_again_choice = input("""Play again:
@@ -143,6 +143,7 @@ def playAgain():
     
     else:
         quit()
+
 
 
 def gameStart():
@@ -272,8 +273,11 @@ Enemy HP: {enemy.hp}
         showAchievements()
         playAgain()
 
+
+ # Getting player to input a desired name
+
+
 def introduction():
-    # Getting player to input a desired name
     player_name = input('''Choose your adventurer's name
 > ''')
     print()
@@ -286,5 +290,75 @@ def introduction():
         player_name = input('''Choose your adventurer's name
 > ''')
 
+
+game_window = Tk()
+
+game_window.geometry("1280x720")
+game_window.title("Sample Combat System")
+game_window.config(background= "#faf4eb")
+
+game_log = Label(game_window,
+                 text= "Time to BATTLE",
+                 font= ('Arial', 24),
+                 bg= '#faf4eb')
+
+button_frame = Frame(game_window,
+                     bg= '#faf4eb')
+
+attack_button = Button(button_frame,
+                       font= ("Arial", 30), 
+                       padx= 20,
+                       relief= RAISED,
+                       bd= 10,
+                       text= 'ATTACK',
+                       command= lambda: game_log.config(text= "Attacked yay"))
+
+defend_button = Button(button_frame,
+                       font= ("Arial", 30), 
+                       padx= 20,
+                       relief= RAISED,
+                       bd= 10,
+                       text= 'DEFEND',
+                       command= lambda: game_log.config(text= "Defended omg"))
+
+heavy_attack_button = Button(button_frame,
+                             font= ("Arial", 30), 
+                             padx= 20,
+                             relief= RAISED,
+                             bd= 10,
+                             text= 'HEAVY',
+                             command= lambda: game_log.config(text= "HEAVY attacked holy cow"))
+
+flee_button = Button(button_frame,
+                     font= ("Arial", 30), 
+                     padx= 20,
+                     relief= RAISED,
+                     bd= 10,
+                     text= 'FLEE', 
+                     command= lambda: game_log.config(text= "Fleeing newb"))
+
+
+game_log.pack()
+
+button_frame.pack(side= 'bottom',
+                  pady= 50)
+
+attack_button.grid(row= 0,
+                   column= 0,
+                   padx= 20)
+
+defend_button.grid(row= 0,
+                   column= 1,
+                   padx= 20)
+
+heavy_attack_button.grid(row= 0,
+                         column= 2,
+                         padx= 20)
+
+flee_button.grid(row= 0,
+                 column= 3,
+                 padx= 20)
+
+game_window.mainloop()
 introduction()
 gameStart()
