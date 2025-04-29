@@ -166,6 +166,15 @@ flee_button = Button(button_frame,
                      text= 'FLEE', 
                      command= flee_pressed)
 
+player_hp_display = Label(game_window,
+                          text= f'Your hp: {player.hp}',
+                          font= ("Arial", 20),
+                          bg= '#faf4eb')
+
+enemy_hp_display = Label(game_window,
+                         text= f'{enemy.name} hp: {enemy.hp}',
+                         font= ("Arial", 20),
+                         bg= '#faf4eb')
 
 game_log.pack()
 
@@ -187,6 +196,14 @@ heavy_attack_button.grid(row= 0,
 flee_button.grid(row= 0,
                  column= 3,
                  padx= 20)
+
+
+player_hp_display.config(text= f'Your hp: {player.hp}')
+enemy_hp_display.config(text= f'{enemy.name} hp: {player.hp}')
+
+player_hp_display.pack()
+
+enemy_hp_display.pack()
 
 
 # Game launches
